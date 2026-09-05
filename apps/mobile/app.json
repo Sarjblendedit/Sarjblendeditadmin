@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "SARJ BLENDED IT", "slug": "sarj-blended-it", "scheme": "sarjblendedit",
+    "version": "1.0.0", "orientation": "portrait", "userInterfaceStyle": "automatic",
+    "ios": { "supportsTablet": true }, "android": { "package": "com.sarjblendedit.app" },
+    "plugins": ["expo-router", "expo-location", ["expo-image-picker", { "photosPermission": "Allow SARJ BLENDED IT to use your haircut inspiration photo." }]]
+  }
+}
+
