@@ -4,7 +4,9 @@
     {
       "src": "apps/admin/package.json",
       "use": "@vercel/next@latest",
-      "config": { "zeroConfig": true }
+      "config": {
+        "zeroConfig": true
+      }
     }
   ],
   "routes": [

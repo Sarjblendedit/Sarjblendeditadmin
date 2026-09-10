@@ -4,12 +4,16 @@
   "description": "Premium mobile-barber booking platform",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "apps/admin",
+    "apps/customer"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=apps/admin",
-    "build": "npm run build --workspace=apps/admin",
-    "start": "npm run start --workspace=apps/admin",
-    "lint": "npm run lint --workspace=apps/admin && npm run lint --workspace=apps/customer"
+    "dev:admin": "npm --workspace=apps/admin run dev",
+    "dev:customer": "npm --workspace=apps/customer run dev",
+    "build:admin": "npm --workspace=apps/admin run build",
+    "build:customer": "npm --workspace=apps/customer run build",
+    "start:admin": "npm --workspace=apps/admin run start",
+    "start:customer": "npm --workspace=apps/customer run start",
+    "lint": "npm --workspace=apps/admin run lint && npm --workspace=apps/customer run lint"
   }
 }
