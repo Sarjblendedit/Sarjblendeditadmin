@@ -51,7 +51,16 @@ export default function CustomerDashboard() {
         .order('scheduled_at', { ascending: false });
 
       if (error) throw error;
-      setBookings(data || []);
+      
+      // Fix type casting: normalize services from array to object
+      const normalizedData = (data || []).map((booking: any) => ({
+        ...booking,
+        services: Array.isArray(booking.services) 
+          ? booking.services[0] || null 
+          : booking.services,
+      }));
+      
+      setBookings(normalizedData as Booking[]);
     } catch (error) {
       console.error('Error loading bookings:', error);
     } finally {
