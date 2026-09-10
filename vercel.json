@@ -12,6 +12,6 @@
       "dest": "apps/admin/$1"
     }
   ],
-  "buildCommand": "npm run build --workspace apps/admin",
+  "buildCommand": "cd apps/admin && npm run build",
   "outputDirectory": "apps/admin/.next"
 }
