@@ -1,1 +1,16 @@
-{ "buildCommand": "npm run build", "outputDirectory": ".next" }
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "apps/admin/package.json",
+      "use": "@vercel/next@latest",
+      "config": { "zeroConfig": true }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "apps/admin/$1"
+    }
+  ]
+}
