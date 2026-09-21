@@ -10,7 +10,15 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.sarjblendedit.app"
+      "package": "com.sarjblendedit.app",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_LOCATION",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "plugins": [
       "expo-router",
@@ -37,6 +45,13 @@
           "defaultChannel": "booking-updates"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "cd47b117-4b17-4779-9b44-001f72526ef2"
+      }
+    },
+    "owner": "sarjblendedit"
   }
 }
