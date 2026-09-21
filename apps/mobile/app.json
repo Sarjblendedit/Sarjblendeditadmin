@@ -2,6 +2,7 @@
   "expo": {
     "name": "SARJ BLENDED IT",
     "slug": "sarj-blended-it",
+    "icon": "./assets/sarj-app-icon.png",
     "scheme": "sarjblendedit",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,6 +12,10 @@
     },
     "android": {
       "package": "com.sarjblendedit.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/sarj-app-icon.png",
+        "backgroundColor": "#15120d"
+      },
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
