@@ -835,34 +835,28 @@ doc.setTextColor(0);
     <AdminChrome>
       <main className="reportPage">
         <section className="reportShell">
-
-          <a
-            className="forgot"
-            href="/"
-          >
-            &larr; Dashboard
-          </a>
-
-          <p className="overline">
-            OPERATIONS REPORTING
-          </p>
-
-          <h1>
-            Detailed business report
-          </h1>
-
-          <p className="reportCopy">
-            Detailed booking, customer, service,
-            walk-in and revenue analysis for the
-            selected reporting period.
-          </p>
+          <section className="reportsHero">
+            <div className="reportsHeroCopy">
+              <span className="reportsHeroIcon">▥</span>
+              <div>
+                <p className="overline">OPERATIONS REPORTING</p>
+                <h1>Business intelligence</h1>
+                <p>Track revenue, appointments, clients and service performance across the period you select.</p>
+              </div>
+            </div>
+            <div className="reportsHeroStats">
+              <div><strong>{money(totalRevenue)}</strong><span>REVENUE</span></div>
+              <div><strong>{completionRate.toFixed(0)}%</strong><span>COMPLETION</span></div>
+              <div><strong>{totalTransactions}</strong><span>TRANSACTIONS</span></div>
+            </div>
+          </section>
 
           {/* FILTERS */}
 
-          <div className="reportFilter">
+          <div className="reportFilter reportToolbar">
 
             <label>
-              From
+              REPORTING FROM
 
               <input
                 type="date"
@@ -874,7 +868,7 @@ doc.setTextColor(0);
             </label>
 
             <label>
-              To
+              REPORTING TO
 
               <input
                 type="date"
@@ -891,7 +885,7 @@ doc.setTextColor(0);
             >
               {loading
                 ? 'Loading...'
-                : 'Run report'}
+                : '↻ REFRESH DATA'}
             </button>
 
             <button
@@ -899,7 +893,7 @@ doc.setTextColor(0);
   onClick={generatePDF}
   disabled={loading}
 >
-  Generate PDF
+  ↓ EXPORT PDF
 </button>
 
           </div>
@@ -912,9 +906,9 @@ doc.setTextColor(0);
 
           {/* TOP METRICS */}
 
-          <section className="metrics">
+          <section className="metrics reportMetrics">
 
-            <article>
+            <article className="reportMetric reportMetric-blue">
               <small>
                 Total appointments
               </small>
@@ -923,7 +917,7 @@ doc.setTextColor(0);
               </strong>
             </article>
 
-            <article>
+            <article className="reportMetric reportMetric-green">
               <small>
                 Completed
               </small>
@@ -932,7 +926,7 @@ doc.setTextColor(0);
               </strong>
             </article>
 
-            <article>
+            <article className="reportMetric reportMetric-purple">
               <small>
                 Walk-ins
               </small>
@@ -941,7 +935,7 @@ doc.setTextColor(0);
               </strong>
             </article>
 
-            <article>
+            <article className="reportMetric reportMetric-gold">
               <small>
                 Total revenue
               </small>

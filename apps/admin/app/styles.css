@@ -2902,6 +2902,47 @@ button:disabled {
 .galleryFolderItem { border-color: rgba(255,255,255,.10); background: linear-gradient(145deg, rgba(27,32,35,.86), rgba(14,17,19,.9)); }
 .galleryEmpty { grid-column: 1 / -1; padding: 26px; border: 1px dashed rgba(255,255,255,.16); border-radius: 13px; color: #9aa6ae; font-size: 12px; text-align: center; }
 
+/* Final shell and reports refinements. Kept here after older page styles so
+   this newer operational treatment is consistently applied. */
+.sidebarBrandRow { min-height: 52px; gap: 9px; padding: 7px 8px; border: 1px solid rgba(225,185,68,.18); border-radius: 14px; background: linear-gradient(135deg, rgba(61,49,17,.46), rgba(16,20,22,.62)); }
+.sidebarBrandMark { width: 34px; height: 34px; border-radius: 10px; font-size: 16px; }
+.brand { display: grid; gap: 3px; margin: 0; line-height: 1; }
+.brand strong { color: #f7f8f5; font-size: 20px; font-weight: 950; letter-spacing: -.4px; }
+.brand span { color: #e5bf4e; font-size: 9px; font-weight: 900; letter-spacing: 1.75px; }
+
+.liveOperationsPage .liveOpsControls { display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 9px; }
+.liveOperationsPage .liveOpsControls select { width: 100%; min-width: 0; }
+.liveOperationsPage .liveOpsViewButton { min-height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 0 10px; border: 1px solid rgba(217,185,80,.25); border-radius: 8px; background: rgba(217,185,80,.06); color: #f4d77b; }
+.liveOperationsPage .liveOpsViewButton b { width: auto; height: auto; border: 0; border-radius: 0; color: #f4d77b; font-size: 15px; }
+.liveOperationsPage .liveOpsViewButton:hover { background: rgba(217,185,80,.15); border-color: rgba(217,185,80,.5); }
+
+.reportShell { width: min(1380px, 100%); }
+.reportsHero { min-height: 128px; display: flex; align-items: center; justify-content: space-between; gap: 22px; margin: 0 0 16px; padding: 20px 22px; border: 1px solid rgba(166,121,236,.26); border-radius: 16px; background: radial-gradient(circle at 4% 0%, rgba(143,92,225,.18), transparent 31%), radial-gradient(circle at 87% 100%, rgba(48,162,207,.10), transparent 28%), linear-gradient(135deg, #191326, #101518 70%); }
+.reportsHeroCopy { min-width: 0; display: flex; align-items: center; gap: 14px; }
+.reportsHeroIcon { width: 52px; height: 52px; flex: 0 0 52px; display: grid; place-items: center; border: 1px solid rgba(205,169,255,.36); border-radius: 16px; background: rgba(154,101,231,.15); color: #d5b8ff; font-size: 25px; }
+.reportsHero h1 { margin: 3px 0 5px; font-size: clamp(26px, 2.7vw, 35px); letter-spacing: -.045em; }
+.reportsHeroCopy > div > p:last-child { max-width: 600px; margin: 0; color: #acb1bd; font-size: 11px; line-height: 1.4; }
+.reportsHeroStats { display: grid; grid-template-columns: repeat(3, minmax(76px, 1fr)); gap: 8px; }
+.reportsHeroStats > div { display: grid; gap: 4px; padding: 10px; border: 1px solid rgba(255,255,255,.11); border-radius: 10px; background: rgba(0,0,0,.17); }
+.reportsHeroStats strong { color: #f4f3f7; font-size: 14px; white-space: nowrap; }
+.reportsHeroStats span { color: #a99ebf; font-size: 8px; font-weight: 900; letter-spacing: .07em; white-space: nowrap; }
+.reportToolbar { grid-template-columns: minmax(160px, .8fr) minmax(160px, .8fr) minmax(145px, .7fr) minmax(135px, .65fr); gap: 10px; margin-bottom: 16px; padding: 13px; border-color: rgba(141,105,214,.2); background: linear-gradient(135deg, rgba(23,21,34,.92), rgba(15,18,20,.94)); }
+.reportToolbar label { color: #cab4ee; font-size: 8px; }
+.reportToolbar input { min-height: 39px; color-scheme: dark; }
+.reportToolbar button { min-height: 39px; padding: 0 10px; font-size: 9px; white-space: nowrap; }
+.reportToolbar button:last-child { border-color: rgba(99,187,226,.42); background: rgba(44,135,178,.12); color: #9edfff; }
+.reportMetrics { gap: 10px; margin-bottom: 16px; }
+.reportMetrics .reportMetric { min-height: 98px; padding: 15px; border-radius: 13px; }
+.reportMetrics .reportMetric small { font-size: 8px; letter-spacing: .09em; }
+.reportMetrics .reportMetric strong { font-size: 25px; }
+.reportMetric-blue { border-color: rgba(88,184,237,.28); background: linear-gradient(145deg, rgba(19,53,72,.72), #101719); }.reportMetric-blue strong { color: #94ddff; }
+.reportMetric-green { border-color: rgba(79,216,157,.28); background: linear-gradient(145deg, rgba(18,67,53,.72), #101817); }.reportMetric-green strong { color: #7ce8bd; }
+.reportMetric-purple { border-color: rgba(183,139,248,.28); background: linear-gradient(145deg, rgba(53,36,91,.72), #15121b); }.reportMetric-purple strong { color: #cbb0ff; }
+.reportMetric-gold { border-color: rgba(235,190,79,.30); background: linear-gradient(145deg, rgba(75,57,19,.74), #1a1710); }.reportMetric-gold strong { color: #ffdc74; }
+
+@media (max-width: 920px) { .reportsHero { align-items: flex-start; flex-direction: column; }.reportsHeroStats { width: 100%; }.reportToolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 540px) { .reportsHero { padding: 17px; }.reportsHeroStats { grid-template-columns: repeat(3, minmax(0, 1fr)); }.reportsHeroStats > div { padding: 8px; }.reportsHeroStats strong { font-size: 11px; }.reportToolbar { grid-template-columns: 1fr; } }
+
 /* =========================================================
    ANIMATION
    ========================================================= */
@@ -3148,6 +3189,41 @@ button:disabled {
   color: var(--muted);
   font-size: 12px;
 }
+
+/* Manual sales desk */
+.manualSalesPage { display: grid; gap: 20px; }
+.manualSalesPanel { border-color: rgba(224, 166, 66, .34); background: linear-gradient(135deg, rgba(224, 166, 66, .11), rgba(16, 21, 28, .96) 48%); }
+.manualSalesPanel .panelHead p:last-child { max-width: 500px; margin: 7px 0 0; color: var(--muted); font-size: 13px; }
+.manualSalesForm { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+.manualSalesForm label { display: grid; gap: 7px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.manualSalesForm label small { color: var(--muted); font-size: 9px; font-weight: 600; }
+.manualSalesForm input, .manualSalesForm select { width: 100%; min-height: 43px; border: 1px solid rgba(230, 190, 84, .22); border-radius: 10px; background: rgba(5, 9, 13, .62); color: var(--text); padding: 0 12px; font: inherit; text-transform: none; }
+.manualSalesActions { display: flex; align-items: end; gap: 9px; grid-column: span 2; }
+.manualSalesActions button { min-height: 43px; }
+.manualSalesRecent .panelHead > span { color: var(--muted); font-size: 12px; }
+.manualSaleRow { grid-template-columns: minmax(0, 1fr) 100px 110px 70px; }
+@media (max-width: 900px) { .manualSalesForm { grid-template-columns: repeat(2, minmax(0, 1fr)); } .manualSalesActions { grid-column: auto; } }
+@media (max-width: 560px) { .manualSalesForm { grid-template-columns: 1fr; } .manualSalesActions { grid-column: auto; flex-wrap: wrap; } .manualSaleRow { grid-template-columns: 1fr auto; } }
+
+/* Compact service menu cards */
+.serviceTable { display: grid; gap: 10px; margin-top: 16px; }
+.serviceTable .serviceRow { grid-template-columns: minmax(260px, 1fr) auto auto auto auto auto; gap: 9px; min-height: 76px; padding: 13px 15px; border: 1px solid rgba(255,255,255,.08); border-radius: 13px; background: linear-gradient(100deg, rgba(23,29,34,.9), rgba(13,17,20,.86)); }
+.serviceTable .serviceRow:hover { border-color: rgba(224, 186, 76, .42); background: linear-gradient(100deg, rgba(35,38,31,.96), rgba(13,17,20,.9)); }
+.serviceTable .serviceRow > strong { padding: 8px 12px; border-radius: 9px; background: rgba(223,184,73,.12); color: #f4d976; white-space: nowrap; }
+.serviceTable .serviceRow > .live, .serviceTable .serviceRow > .offline { min-width: 66px; text-align: center; }
+.serviceTable .serviceRow .textButton { min-width: 55px; padding: 8px 9px; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; background: rgba(255,255,255,.025); }
+.serviceTable .serviceRow .textButton:hover { border-color: var(--gold); background: rgba(224,186,76,.1); }
+.serviceTable .serviceRow .dangerButton:hover { border-color: var(--danger); background: rgba(235,89,89,.08); }
+
+/* Floating admin/customer chat */
+.adminChatRoot { position: fixed; z-index: 80; right: 22px; bottom: 54px; }
+.adminChatLauncher { display:flex; align-items:center; gap:7px; min-height:38px; padding:0 13px; border:1px solid #edcf63; border-radius:20px; background:#e1bd4c; color:#17140c; font-size:12px; font-weight:900; box-shadow:0 10px 28px rgba(0,0,0,.35); }
+.adminChatLauncher span { font-size:17px; }.adminChatLauncher i { display:grid; place-items:center; width:18px; height:18px; border-radius:50%; background:#1b211f; color:#8bf1be; font-size:10px; font-style:normal; }
+.adminChatPanel { position:absolute; right:0; bottom:48px; width:min(610px, calc(100vw - 42px)); height:410px; overflow:hidden; border:1px solid rgba(224,186,76,.38); border-radius:15px; background:#101417; box-shadow:0 18px 55px rgba(0,0,0,.5); }
+.adminChatPanel>header { height:70px; padding:13px 16px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); background:linear-gradient(90deg,#252113,#171b1e); }.adminChatPanel header p{margin:0;color:var(--gold);font-size:9px;font-weight:900;letter-spacing:1.3px}.adminChatPanel h3{margin:4px 0 0;font-size:17px}.adminChatPanel header button{width:32px;height:32px;border-radius:50%;background:#2c3337;color:#fff;font-size:21px}
+.adminChatBody { display:grid; grid-template-columns:170px 1fr; height:340px; }.adminChatBody aside{overflow:auto;border-right:1px solid var(--line);padding:7px}.adminChatBody aside button{width:100%;padding:10px;text-align:left;border-radius:9px;background:transparent;color:var(--text)}.adminChatBody aside button.active{background:rgba(224,186,76,.14)}.adminChatBody aside b,.adminChatBody aside span{display:block}.adminChatBody aside span{margin-top:4px;overflow:hidden;color:var(--muted);font-size:11px;text-overflow:ellipsis;white-space:nowrap}.adminChatBody aside>p{padding:14px;color:var(--muted);font-size:12px}
+.adminChatBody main{min-width:0;display:flex;flex-direction:column}.adminChatClient{padding:10px 13px;border-bottom:1px solid var(--line)}.adminChatClient b,.adminChatClient span{display:block}.adminChatClient span{margin-top:3px;color:var(--muted);font-size:11px}.adminChatMessages{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}.adminChatBubble{align-self:flex-start;max-width:78%;padding:9px 11px;border-radius:11px;background:#252c30}.adminChatBubble.admin{align-self:flex-end;background:#ddbb4d;color:#17140b}.adminChatBubble p{margin:0;font-size:13px;line-height:18px}.adminChatBubble small{display:block;margin-top:4px;color:#9ba3a7;font-size:9px}.adminChatBubble.admin small{color:#635018}.adminChatBody form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}.adminChatBody form input{min-width:0;flex:1;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:#20262a;color:#fff}.adminChatBody form button{padding:0 13px;background:var(--gold);color:#17140b}.adminChatEmpty{display:grid;place-items:center;flex:1;color:var(--muted);font-size:13px}
+@media(max-width:600px){.adminChatRoot{right:14px;bottom:14px}.adminChatBody{grid-template-columns:125px 1fr}.adminChatPanel{height:440px}.adminChatBody{height:370px}.serviceTable .serviceRow{grid-template-columns:1fr auto;}.serviceTable .serviceRow>span,.serviceTable .serviceRow .textButton{justify-self:start}}
 
 .walkInPanel {
   width: 100%;
@@ -5365,9 +5441,11 @@ button:disabled {
    ========================================================================== */
 
 .liveOpsControls {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 9px;
   min-width: 0;
   padding-left: 18px;
   border-left: 1px solid rgba(255,255,255,.09);
@@ -5398,14 +5476,17 @@ button:disabled {
 }
 
 .liveOpsViewButton {
-  display: flex;
+  min-height: 32px;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 8px;
   width: 100%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--gold-soft);
+  padding: 0 10px;
+  border: 1px solid rgba(217,185,80,.22);
+  border-radius: 8px;
+  background: rgba(217,185,80,.06);
+  color: #f4d77b;
   font-family: inherit;
   font-size: 10px;
   font-weight: 600;
@@ -5416,18 +5497,19 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  border: 1px solid rgba(217,185,80,.2);
-  border-radius: 50%;
+  width: auto;
+  height: auto;
+  border: 0;
   color: var(--gold);
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1;
   font-weight: 400;
   transition:
     background .18s ease,
     color .18s ease;
 }
+
+.liveOpsViewButton:hover { background: rgba(217,185,80,.14); border-color: rgba(217,185,80,.48); }
 
 .liveOpsViewButton:hover b {
   background: var(--gold);

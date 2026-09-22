@@ -8,9 +8,11 @@ import { createClient } from '@supabase/supabase-js';
 
 import { LogoUpload } from './components/LogoUpload';
 import { WalkInsPanel } from './components/WalkInsPanel';
+import { ManualSalesPanel } from './components/ManualSalesPanel';
 import { AppointmentsPanel } from './components/AppointmentsPanel';
 import { ProfileUpload } from './components/ProfileUpload';
 import ReportsPanel from './components/ReportsPanel';
+import { AdminChat } from './components/AdminChat';
 
 const LiveOperationsMap = dynamic(
   () => import('./components/LiveOperationsMap'),
@@ -257,6 +259,7 @@ export default function Admin() {
   | 'appointments'
   | 'reports'
   | 'walkins'
+  | 'manual-sales'
   | 'settings'
 >('overview');
 
@@ -288,6 +291,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState('');
   const [filter, setFilter] = useState<'all' | Status>('all');
+  const [customerSearch, setCustomerSearch] = useState('');
   const [overviewDate, setOverviewDate] = useState(() => localDateKey());
   const [bookingsDate, setBookingsDate] = useState(() => localDateKey());
   const [liveOperationsDate, setLiveOperationsDate] = useState(() => localDateKey());
@@ -893,6 +897,27 @@ export default function Admin() {
           : s
       )
     );
+  };
+
+  const deleteService = async (service: Service) => {
+    const confirmed = window.confirm(
+      `Delete “${service.name}”? This cannot be undone. Services already used in bookings must be hidden instead.`
+    );
+    if (!confirmed) return;
+
+    const { error } = await supabase
+      .from('services')
+      .delete()
+      .eq('id', service.id);
+
+    if (error) {
+      setNotice(`Could not delete ${service.name}. ${error.message}`);
+      return;
+    }
+
+    setServices(old => old.filter(item => item.id !== service.id));
+    if (editing?.id === service.id) setEditing(null);
+    setNotice('Service deleted.');
   };
 
   /*
@@ -1502,6 +1527,20 @@ export default function Admin() {
     bookingCustomers.length +
     manualCustomers.length;
 
+  const normalizedCustomerSearch = customerSearch.trim().toLowerCase();
+  const visibleBookingCustomers = bookingCustomers.filter(customer =>
+    !normalizedCustomerSearch ||
+    `${customer.full_name || ''} ${customer.phone || ''}`
+      .toLowerCase()
+      .includes(normalizedCustomerSearch)
+  );
+  const visibleManualCustomers = manualCustomers.filter(customer =>
+    !normalizedCustomerSearch ||
+    `${customer.first_name || ''} ${customer.last_name || ''} ${customer.phone || ''} ${customer.email || ''}`
+      .toLowerCase()
+      .includes(normalizedCustomerSearch)
+  );
+
   useEffect(() => {
     let midnightTimer: ReturnType<typeof setTimeout>;
 
@@ -1648,6 +1687,7 @@ export default function Admin() {
     appointments: { eyebrow: 'CALENDAR CONTROL', title: 'Appointments', copy: 'Manage booking availability and upcoming service time slots.', icon: '◷', stat: `${bookings.length} total`, tone: 'blue' },
     reports: { eyebrow: 'BUSINESS INTELLIGENCE', title: 'Reports', copy: 'Turn your appointments and payments into clear operating insight.', icon: '▥', stat: `${bookings.length} records`, tone: 'violet' },
     walkins: { eyebrow: 'WALK-IN DESK', title: 'Walk-ins', copy: 'Capture in-person clients and turn every visit into a relationship.', icon: '＋', stat: `${manualCustomers.length} records`, tone: 'teal' },
+    'manual-sales': { eyebrow: 'COUNTER SALES', title: 'Manual service entry', copy: 'Record a customer, service and price for every in-person sale.', icon: '▣', stat: `${services.filter(service => service.is_active).length} services ready`, tone: 'orange' },
     settings: { eyebrow: 'BUSINESS CONTROL', title: 'Business settings', copy: 'Keep your public business details and operating preferences accurate.', icon: '⚙', stat: business?.business_name || 'SARJ', tone: 'gold' },
   }[tab === 'live-operations' ? 'overview' : tab];
 
@@ -1753,7 +1793,7 @@ export default function Admin() {
       <aside>
         <div className="sidebarBrandRow">
           <span className="sidebarBrandMark">✂</span>
-          <p className="brand">SARJ<br /><span>BLENDED IT</span></p>
+          <p className="brand"><strong>SARJ</strong><span>BLENDED IT</span></p>
         </div>
 
         <p className="tag">
@@ -1904,6 +1944,13 @@ export default function Admin() {
             }
           >
             <span className="sidebarIcon">＋</span><span>Walk-ins</span>
+          </button>
+
+          <button
+            className={tab === 'manual-sales' ? 'active' : ''}
+            onClick={() => setTab('manual-sales')}
+          >
+            <span className="sidebarIcon">▣</span><span>Manual sales</span>
           </button>
 
           <button
@@ -2060,6 +2107,10 @@ export default function Admin() {
 
         {tab === 'walkins' && (
           <WalkInsPanel />
+        )}
+
+        {tab === 'manual-sales' && (
+          <ManualSalesPanel />
         )}
 
         {tab === 'reports' && (
@@ -2562,6 +2613,13 @@ export default function Admin() {
                         ? 'Hide'
                         : 'Publish'}
                     </button>
+
+                    <button
+                      className="textButton dangerButton"
+                      onClick={() => deleteService(service)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 )
               )}
@@ -2614,74 +2672,8 @@ export default function Admin() {
               <input
                 type="search"
                 placeholder="Search customers by name or phone…"
-                onChange={e => {
-                  const value =
-                    e.target.value
-                      .toLowerCase()
-                      .trim();
-
-                  setCustomers(old =>
-                    [...old].sort(
-                      (a, b) => {
-                        const aMatch =
-                          `${a.full_name || ''} ${
-                            a.phone || ''
-                          }`
-                            .toLowerCase()
-                            .includes(
-                              value
-                            );
-
-                        const bMatch =
-                          `${b.full_name || ''} ${
-                            b.phone || ''
-                          }`
-                            .toLowerCase()
-                            .includes(
-                              value
-                            );
-
-                        return (
-                          Number(bMatch) -
-                          Number(aMatch)
-                        );
-                      }
-                    )
-                  );
-
-                  setManualCustomers(old =>
-                    [...old].sort(
-                      (a, b) => {
-                        const aMatch =
-                          `${a.first_name || ''} ${
-                            a.last_name || ''
-                          } ${
-                            a.phone || ''
-                          }`
-                            .toLowerCase()
-                            .includes(
-                              value
-                            );
-
-                        const bMatch =
-                          `${b.first_name || ''} ${
-                            b.last_name || ''
-                          } ${
-                            b.phone || ''
-                          }`
-                            .toLowerCase()
-                            .includes(
-                              value
-                            );
-
-                        return (
-                          Number(bMatch) -
-                          Number(aMatch)
-                        );
-                      }
-                    )
-                  );
-                }}
+                value={customerSearch}
+                onChange={e => setCustomerSearch(e.target.value)}
               />
             </div>
 
@@ -2705,7 +2697,7 @@ export default function Admin() {
               </div>
 
               <div className="serviceTable">
-                {bookingCustomers.map(
+                {visibleBookingCustomers.map(
                   customer => {
                     const history =
                       bookings.filter(
@@ -2835,7 +2827,7 @@ export default function Admin() {
                   }
                 )}
 
-                {manualCustomers.map(
+                {visibleManualCustomers.map(
                   customer => {
                     const fullName =
                       `${customer.first_name} ${
@@ -2979,12 +2971,13 @@ export default function Admin() {
                   }
                 )}
 
-                {!bookingCustomers.length &&
-                  !manualCustomers.length &&
+                {!visibleBookingCustomers.length &&
+                  !visibleManualCustomers.length &&
                   !loading && (
                     <p className="empty">
-                      No customers have been
-                      added yet.
+                      {normalizedCustomerSearch
+                        ? 'No customers match that search.'
+                        : 'No customers have been added yet.'}
                     </p>
                   )}
               </div>
@@ -4687,6 +4680,7 @@ export default function Admin() {
               : 'Not connected'}
           </span>
         </footer>
+        <AdminChat />
       </section>
     </main>
   );
