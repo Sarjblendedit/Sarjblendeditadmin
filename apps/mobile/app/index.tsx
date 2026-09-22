@@ -382,7 +382,8 @@ export default function Home() {
             paddingTop: spacing.sm,
             paddingHorizontal:
               pageHorizontalPadding,
-            paddingBottom: 0,
+            // Leave room for the persistent navigation and chat launcher.
+            paddingBottom: 112,
           }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -404,6 +405,13 @@ export default function Home() {
               s.hero,
               {
                 transform: [
+                  { perspective: 900 },
+                  {
+                    rotateX: heroScale.interpolate({
+                      inputRange: [0.985, 1],
+                      outputRange: ['1.4deg', '0deg'],
+                    }),
+                  },
                   {
                     scale: heroScale,
                   },
@@ -553,6 +561,26 @@ export default function Home() {
             </View>
           </Animated.View>
 
+          {/* A compact command deck keeps the most useful customer actions
+              immediately available instead of leaving dead space below hero. */}
+          <View style={s.commandDeck}>
+            <Pressable onPress={book} style={({ pressed }) => [s.commandCard, s.commandPrimary, pressed && s.commandPressed]}>
+              <View style={s.commandIcon}><Text style={s.commandIconText}>＋</Text></View>
+              <View style={s.commandCopy}><Text style={[s.commandTitle, s.commandPrimaryTitle]}>Book a service</Text><Text style={[s.commandText, s.commandPrimaryText]}>Choose a time and place</Text></View>
+              <Text style={[s.commandArrow, s.commandPrimaryArrow]}>→</Text>
+            </Pressable>
+            <Pressable onPress={() => router.push('/bookings')} style={({ pressed }) => [s.commandCard, s.commandDark, pressed && s.commandPressed]}>
+              <View style={[s.commandIcon, s.commandIconBlue]}><Text style={s.commandIconText}>◷</Text></View>
+              <View style={s.commandCopy}><Text style={s.commandTitle}>My appointments</Text><Text style={s.commandText}>Track every booking</Text></View>
+              <Text style={s.commandArrow}>→</Text>
+            </Pressable>
+            <Pressable onPress={() => router.push('/account')} style={({ pressed }) => [s.commandCard, s.commandDark, pressed && s.commandPressed]}>
+              <View style={[s.commandIcon, s.commandIconGreen]}><Text style={s.commandIconText}>◎</Text></View>
+              <View style={s.commandCopy}><Text style={s.commandTitle}>Your account</Text><Text style={s.commandText}>Settings and support</Text></View>
+              <Text style={s.commandArrow}>→</Text>
+            </Pressable>
+          </View>
+
           {/* =================================================
               REAL BUSINESS STATS
           ================================================= */}
@@ -641,6 +669,13 @@ export default function Home() {
                            translateX: serviceSlide.interpolate({
                              inputRange: [0, 1],
                              outputRange: [28 + index * 8, 0],
+                           }),
+                         }, {
+                           perspective: 800,
+                         }, {
+                           rotateY: serviceSlide.interpolate({
+                             inputRange: [0, 1],
+                             outputRange: ['5deg', '0deg'],
                            }),
                          }],
                        }}
@@ -1443,7 +1478,7 @@ const s = StyleSheet.create({
   ================================================= */
 
   hero: {
-    minHeight: 278,
+    minHeight: 258,
     borderRadius: radius.xl,
     overflow: 'hidden',
     backgroundColor: '#12110D',
@@ -1547,8 +1582,8 @@ const s = StyleSheet.create({
 
   heroMain: {
     paddingHorizontal: spacing.lg,
-    paddingTop: 16,
-    paddingBottom: 14,
+    paddingTop: 12,
+    paddingBottom: 10,
   },
 
   heroGreetingRow: {
@@ -1681,6 +1716,63 @@ const s = StyleSheet.create({
   },
 
   /* =================================================
+     CUSTOMER COMMAND DECK
+  ================================================= */
+  commandDeck: {
+    marginTop: 12,
+    gap: 9,
+  },
+
+  commandCard: {
+    minHeight: 68,
+    paddingHorizontal: 13,
+    borderRadius: 16,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.22,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 4,
+  },
+
+  commandPrimary: {
+    borderColor: '#e6c650',
+    backgroundColor: '#d9b950',
+  },
+
+  commandDark: {
+    borderColor: '#2e3940',
+    backgroundColor: '#171d21',
+  },
+
+  commandPressed: {
+    transform: [{ scale: 0.975 }, { translateY: 2 }],
+    opacity: 0.9,
+  },
+
+  commandIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(41,31,4,0.16)',
+  },
+
+  commandIconBlue: { backgroundColor: '#164d73' },
+  commandIconGreen: { backgroundColor: '#175d4b' },
+  commandIconText: { color: theme.text, fontSize: 18, fontWeight: '900' },
+  commandCopy: { flex: 1, marginLeft: 11 },
+  commandTitle: { color: theme.text, fontSize: 13, fontWeight: '900' },
+  commandText: { marginTop: 2, color: theme.muted, fontSize: 10 },
+  commandArrow: { color: theme.goldSoft, fontSize: 18, fontWeight: '800' },
+  commandPrimaryTitle: { color: '#18130a' },
+  commandPrimaryText: { color: '#5c4c13' },
+  commandPrimaryArrow: { color: '#18130a' },
+
+  /* =================================================
      VALUE STRIP
   ================================================= */
 
@@ -1728,7 +1820,7 @@ const s = StyleSheet.create({
   ================================================= */
 
   section: {
-    marginTop: 28,
+    marginTop: 22,
   },
 
   sectionEyebrow: {
@@ -2358,8 +2450,8 @@ const s = StyleSheet.create({
   ================================================= */
 
   quickBook: {
-    marginTop: 28,
-    minHeight: 254,
+    marginTop: 22,
+    minHeight: 232,
     padding: spacing.xl,
     borderRadius: radius.xl,
     backgroundColor: theme.gold,

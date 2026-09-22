@@ -15,6 +15,7 @@ import {
 } from '../components/ui';
 import { BookingNotificationListener } from '../components/BookingNotificationListener';
 import { PushNotificationRegistration } from '../components/PushNotificationRegistration';
+import { CustomerChat } from '../components/CustomerChat';
 
 type NavKey =
   | 'home'
@@ -107,6 +108,7 @@ function CustomerShell() {
       ================================================= */}
 
       <BottomNav active={active} />
+      <CustomerChat />
     </View>
   );
 }
